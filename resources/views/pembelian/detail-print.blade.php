@@ -120,7 +120,7 @@
                                                             <p class="itemtext">Rp. {{ number_format($detail->product->price, 0, ',', '.') }}</p>
                                                         </td>
                                                         <td class="tableitem">
-                                                            <p class="itemtext">{{ $detail->amount }}</p>
+                                                            <p class="itemtext">{{ $detail->quantity }}</p>
                                                         </td>
                                                         <td class="tableitem">
                                                             <p class="itemtext">Rp. {{ number_format($detail->sub_total, 0, ',', '.') }}</p>
@@ -145,6 +145,10 @@
                                         <span class="text-inverse">{{ $purchase->user->name ?? 'Kasir' }}</span>
                                     </div>
                                     <div class="sub-price">
+                                        <small>uang yang diberi</small>
+                                        <span class="text-inverse">Rp. {{ number_format($purchase->total_pay, 0, ',', '.') }}</span>
+                                    </div>
+                                    <div class="sub-price">
                                         <small>KEMBALIAN</small>
                                         <span class="text-inverse">Rp. {{ number_format($purchase->total_return, 0, ',', '.') }}</span>
                                     </div>
@@ -152,8 +156,22 @@
                             </div>
                             <div class="invoice-price-right">
                                 <small>TOTAL</small>
-                                <span class="f-w-600" style="text-decoration: none;">Rp. {{ number_format($purchase->total_price, 0, ',', '.') }}</span>
+                                
+                                @php
+                                    $selectedDetails = $purchase->details->take(3);
+                                    $selectedTotal = $selectedDetails->sum('sub_total');
+                                @endphp
+                            
+                                <span class="f-w-600" style="text-decoration: line-through; text-decoration-color: red;">
+                                    Rp. {{ number_format($selectedTotal, 0, ',', '.') }}
+                                </span>
+                                
+                                <br>
+                                <span class="f-w-600" style="text-decoration: none;">
+                                    Rp. {{ number_format($purchase->total_price, 0, ',', '.') }}
+                                </span>
                             </div>
+                            
                         </div>
                     </div>
                 </div>
