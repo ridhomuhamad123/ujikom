@@ -42,7 +42,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/member-form', [PurchaseController::class, 'memberForm'])->name('memberForm');
         Route::post('/member-store', [PurchaseController::class, 'storeMember'])->name('storeMember');
         Route::get('/detail-print/{id}', [PurchaseController::class, 'detailPrint'])->name('detailPrint');
-
+        Route::get('lihat/{id}', [PurchaseController::class, 'lihat'])->name('lihat');
+        Route::get('export-pdf/{id}', [PurchaseController::class, 'exportPdf'])->name('export-pdf');
+        Route::get('/export_excel', [PurchaseController::class, 'export_excel'])->name('export_excel');
 
     });
 

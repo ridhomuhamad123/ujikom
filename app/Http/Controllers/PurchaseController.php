@@ -161,4 +161,26 @@ class PurchaseController extends Controller
         return view('pembelian.detail-print', compact('purchase'));
     }
 
+    public function lihat(Request $request, $id)
+    {
+        $purchase = Purchase::with(['member', 'user', 'details.product', ])->find($id);
+        // dd($purchase->details->toArray());
+        return view('pembelian.detail', compact('purchase'));
+    }
+
+    public function exportPdf($id)
+    {
+        $sales = Purchase::with(['member', 'user', 'details.product'])->findOrFail($id);
+        // dd($sales);  
+        $pdf = Pdf::loadView('pdf.export-sale', compact('sales'));
+        $filename = 'Bukti_Penjualan_' . ($sales->member ? $sales->member->name : 'NON-MEMBER') . '.pdf';
+        return $pdf->stream($filename);
+    }   
+
+    public function export_excel()
+    {
+        return (new PurchaseExport)->download('sales'.Carbon::now()->timestamp.'.xlsx');
+    }
+
+
 }

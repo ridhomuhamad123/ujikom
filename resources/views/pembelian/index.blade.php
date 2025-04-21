@@ -4,7 +4,7 @@
 <div class="ml-64 p-6 mt-10 bg-white rounded-lg shadow-md min-h-screen">
     <div class="flex justify-between items-center mb-6">
         <h2 class="text-xl font-semibold text-gray-700">Data Pembelian</h2>
-        <a href="" class="btn btn-primary">Export Penjualan (.xlsx)</a>
+        <a href="{{ route('purchases.export_excel') }}" class="btn btn-primary">Export Penjualan (.xlsx)</a>
 
         @if(Auth::user()->role == 'petugas')
         <a href="{{route('purchases.create')}}" class="bg-blue-600 hover:bg-blue-700 text-black px-4 py-2 rounded">
@@ -42,8 +42,8 @@
                         {{ $item->user ? $item->user->username : '-' }}
                     </td>
                     <td class="px-4 py-2 whitespace-nowrap space-x-2">
-                        <a href="" class="bg-black text-white px-3 py-1 rounded text-sm hover:bg-gray-800">Lihat</a>
-                        <a href="" class="btn btn-primary btn-sm">Unduh BUkti</a>
+                        <a href="{{ route('purchases.lihat', $item['id']) }}" class="bg-black text-white px-3 py-1 rounded text-sm hover:bg-gray-800">Lihat</a>
+                        <a href="{{ route('purchases.export-pdf', $item['id']) }}" class="btn btn-primary btn-sm">Unduh BUkti</a>
                     </td>
                 </tr>
                 @endforeach
